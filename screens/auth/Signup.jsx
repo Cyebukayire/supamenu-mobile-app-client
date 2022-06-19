@@ -1,10 +1,45 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { NativeModules } from "react-native-web";
 import Colors from '../../constants/Colors';
+import { baseUrl } from "../../utils/baseUrl";
+import { token } from "../../utils/token";
 
 export default function SignupScreen({route, navigation}){
+    const [ formData, setFormData] = useState({
+        email: "",
+        firstName: "",
+        lastName: "",
+        mobile: "",
+        password: ""
+    })
+    const Signup = async (data) => {
+        console.log(data)
+        await axios.post(`${baseUrl}/auth/client/signup`,
+            {
+                email: data.email,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                mobile: data.mobile,
+                password: data.password
+            }
+            ,{
+                headers: {
+                    "Content-Type": "Application/Json",
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+        .then((response) => {
+            console.log("Signed up successfully");
+        })
+        .catch((e) => {
+            console.error(e.response.data.apierror.message);
+        })
+    }
     return(
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.sub_container}>
                 <View>
                     <Text style={styles.title}>
@@ -13,28 +48,76 @@ export default function SignupScreen({route, navigation}){
                     <Text style={styles.welcome}>Welcome ...</Text>
                     <Text style={styles.sub_welcome}>Please fill in the information</Text>
                 </View>
-                <ScrollView>
                     <View style={styles.inputs}>
                         <View style={styles.inputContainer}>
                             <TextInput
                             style={styles.input}
-                            placeholder="Enter your full name"
-                            onChangeText={(text) => {}}
+                            placeholder="Email"
+                            onChangeText={(text) => {
+                                setFormData((prevData) => {
+                                    return({
+                                        ...prevData,
+                                        email: text
+                                    })
+                                })
+                            }}
                             />
                         </View>
                         <View style={styles.inputContainer}>
                             <TextInput
                             style={styles.input}
-                            placeholder="Enter your email"
-                            onChangeText={(text) => {}}
+                            placeholder="First name"
+                            onChangeText={(text) => {
+                                setFormData((prevData) => {
+                                    return({
+                                        ...prevData,
+                                        firstName: text
+                                    })
+                                })
+                            }}
+                            />
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <TextInput
+                            style={styles.input}
+                            placeholder="Last name"
+                            onChangeText={(text) => {
+                                setFormData((prevData) => {
+                                    return({
+                                        ...prevData,
+                                        lastName: text
+                                    })
+                                })
+                            }}
+                            />
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <TextInput
+                            style={styles.input}
+                            placeholder="Phone number"
+                            onChangeText={(text) => {
+                                setFormData((prevData) => {
+                                    return({
+                                        ...prevData,
+                                        mobile: text
+                                    })
+                                })
+                            }}
                             />
                         </View>
                         <View style={styles.inputContainer}>
                             <TextInput
                             secureTextEntry={true}
                             style={styles.input}
-                            placeholder="Enter your password"
-                            onChangeText={(text) => {}}
+                            placeholder="Password"
+                            onChangeText={(text) => {
+                                setFormData((prevData) => {
+                                    return({
+                                        ...prevData,
+                                        password: text
+                                    })
+                                })
+                            }}
                             />
                         </View>
                     </View>
@@ -42,6 +125,9 @@ export default function SignupScreen({route, navigation}){
                         style={styles.button}
                         title="Sign In"
                         color={Colors.primary}  
+                        onPress={() => {
+                            Signup(formData);
+                        }}
                         >
                         <Text style={styles.btnText}>Sign Up</Text>
                     </TouchableOpacity>
@@ -55,15 +141,20 @@ export default function SignupScreen({route, navigation}){
                             <Text style={{color: Colors.primary, fontSize: 15}}>Signin</Text>
                         </TouchableOpacity>
                     </Text>
-                </ScrollView>
             </View>
-        </View>
+        </ScrollView>
     );
 } 
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.primary,
+        width: '100%',
+        height: "100%",
+        boxSizing: "border-box",
+    },
+    scroll: {
+        backgroundColor: "transparent",
         width: '100%',
         height: "100%",
         boxSizing: "border-box",
@@ -148,6 +239,7 @@ const styles = StyleSheet.create({
         fontSize: 18,   
         color: Colors.grey,
         textAlign: "center",
-        margin: 5
+        margin: 5,
+        marginBottom: 30,
     }
 })

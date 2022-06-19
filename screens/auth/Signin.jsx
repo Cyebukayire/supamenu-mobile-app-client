@@ -1,8 +1,33 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import Colors from '../../constants/Colors';
+import { baseUrl } from "../../utils/baseUrl";
 
 export default function SigninScreen({route, navigation}){
+    const [token, setToken] = useState(false);
+    const [formData, setFormData] = useState({
+        login: '',
+        password: ''
+    })
+    const Login = async (data) => {
+        await axios.post(`${baseUrl}/auth/signin`,
+        {
+            login: data.login,
+            password: data.password
+        },
+        {
+            "Content-Type": "Application/Json"
+        })
+        .then((response) => {
+            setToken(response.data.token.accessToken);
+            console.log(token)
+            console.log("Logged in successfully");
+        })
+        .catch((e) => {
+            console.log(e.response.data.apierror.message)
+        })
+    }
     return(
         <View style={styles.container}>
             <View style={styles.sub_container}>
@@ -19,7 +44,14 @@ export default function SigninScreen({route, navigation}){
                             <TextInput
                             style={styles.input}
                             placeholder="Enter your email"
-                            onChangeText={(text) => {}}
+                            onChangeText={(text) => {
+                                setFormData((prevData) => {
+                                    return({
+                                        ...prevData,
+                                        login: text,
+                                    })
+                                })
+                            }}
                             />
                         </View>
                         <View style={styles.inputContainer}>
@@ -27,7 +59,13 @@ export default function SigninScreen({route, navigation}){
                             secureTextEntry={true}
                             style={styles.input}
                             placeholder="Enter your password"
-                            onChangeText={(text) => {}}
+                            onChangeText={(text) => {
+                                setFormData((prevData) => {
+                                    return({
+                                        ...prevData,
+                                        password: text,
+                                    })
+                                })}}
                             />
                         </View>
                     </View>
@@ -35,6 +73,9 @@ export default function SigninScreen({route, navigation}){
                         style={styles.button}
                         title="Sign In"
                         color={Colors.primary}  
+                        onPress={() => {
+                            Login(formData);
+                        }}
                     >
                         <Text style={styles.btnText}>Sign In</Text>
                     </TouchableOpacity>
