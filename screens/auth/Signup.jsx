@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import Colors from '../../constants/Colors';
 
-export default function SignupScreen(){
+export default function SignupScreen({route, navigation}){
     return(
         <View style={styles.container}>
             <View style={styles.sub_container}>
@@ -11,7 +11,7 @@ export default function SignupScreen(){
                         <Text style={styles.sub_title}>Supa</Text>Menu
                     </Text> 
                     <Text style={styles.welcome}>Welcome ...</Text>
-                    <Text style={styles.sub_welcome}>Signin to continue</Text>
+                    <Text style={styles.sub_welcome}>Please fill in the information</Text>
                 </View>
                 <ScrollView>
                     <View style={styles.inputs}>
@@ -47,7 +47,11 @@ export default function SignupScreen(){
                     </TouchableOpacity>
                     <Text style={styles.account}>
                         <Text>Already have an account? </Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate("SigninScreen", {});
+                        }}
+                        >
                             <Text style={{color: Colors.primary, fontSize: 15}}>Signin</Text>
                         </TouchableOpacity>
                     </Text>
