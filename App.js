@@ -5,6 +5,7 @@ import SignupScreen from './screens/auth/Signup';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchScreen from './screens/search/Search';
+import SearchResultsScreen from './screens/search/SearchResults';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -24,6 +25,11 @@ export default function App() {
         <Stack.Screen
         name="SearchScreen"
         component={SearchScreen}
+        options = {{headerShown: false}}
+        />
+        <Stack.Screen
+        name = "SearchResultsScreen"
+        component ={SearchResultsScreen}
         options = {{headerShown: false}}
         />
       </Stack.Navigator>

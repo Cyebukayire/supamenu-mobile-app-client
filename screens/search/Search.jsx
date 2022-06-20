@@ -1,13 +1,18 @@
-import {Text, View, StyleSheet, TextInput, Image } from 'react-native'
+import { useState } from 'react'
+import {Text, View, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native'
 import Colors from '../../constants/Colors'
 
-export default function SearchScreen() {
+export default function SearchScreen({navigation, route}) {
+    const [keywords, setKeywords] = useState(false);
     return(
         <View style={styles.container}>
             <View style={styles.inputContainer}>
                 <TextInput
                 style={styles.input}
-                placeholder="Search ..."
+                onFocus = {() => {
+                    navigation.navigate("SearchResultsScreen", {});
+                }}
+                placeholder="Search for your preferred restaurant ..."
                 />
             </View>
             <Text style={styles.or}>or</Text>
@@ -42,6 +47,9 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         marginTop: 100,
         alignContent: 'center',
+        paddingTop: 2,
+        paddingLeft: 10,
+        paddingRight: 10
     },
     input: {
         padding: 10,
