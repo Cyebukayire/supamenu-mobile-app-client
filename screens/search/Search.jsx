@@ -4,21 +4,26 @@ import Colors from '../../constants/Colors'
 
 export default function SearchScreen({navigation, route}) {
     const [keywords, setKeywords] = useState(false);
+    console.log("why are you there")
     return(
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container}
+        onPress={()=>{
+            console.log("cz touched")
+        }}
+        >
+            <TouchableOpacity>
+            <Text>Hello</Text>
+        </TouchableOpacity>
             <View style={styles.inputContainer}>
                 <TextInput
                 style={styles.input}
-                onFocus = {() => {
-                    navigation.navigate("SearchResultsScreen", {});
-                }}
                 placeholder="Search for your preferred restaurant ..."
                 />
             </View>
             <Text style={styles.or}>or</Text>
             <Image style={styles.img} source={require('../../assets/scan.png')}/>
             <Text style={styles.text}>Scan, Pay & Enjoy</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -52,8 +57,9 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },
     input: {
+        marginTop: 4,
         padding: 10,
-        fontSize: 20,
+        fontSize: 16,
         color: "black",
     },
 

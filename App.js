@@ -22,11 +22,11 @@ export default function App() {
           component = {SigninScreen}
           options = {{headerShown: false}}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
         name="SearchScreen"
         component={SearchScreen}
         options = {{headerShown: false}}
-        />
+        /> */}
         <Stack.Screen
         name = "SearchResultsScreen"
         component ={SearchResultsScreen}
