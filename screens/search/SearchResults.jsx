@@ -1,6 +1,6 @@
 import { TextInput, Text, View, StyleSheet} from "react-native";
 import BackButton from "../../components/buttons/BackButton";
-import Card from "../../components/cards/SearchResultCard";
+import ResultCard from "../../components/cards/ResultCard";
 import Colors from "../../constants/Colors";
 
 export default function SearchResultsScreen({route, navigation}) {
@@ -14,7 +14,7 @@ export default function SearchResultsScreen({route, navigation}) {
             </View>
 
             <Text style={styles.title}>Nearby Reastaurants</Text>
-            <Card/>
+            <ResultCard />
         </View>
     )
 }

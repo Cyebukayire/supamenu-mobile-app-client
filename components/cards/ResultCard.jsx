@@ -1,20 +1,15 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native-web";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
 
-export default function Card(){
+const ResultCard = () => {
     return(
-        <View style={styles.card}>
-            <Image
-              source={{
-                uri: "https://poetryteatime.com/assets/blog-images/_featuredMaxHeight/PTT-Tips-Tea-in-India-featured.jpg",
-              }}
-              resizeMode="contain"
-              style={styles.img}
-            />
+        <View >
+            <Text>Hello worldss</Text>
+{/*            
             <View style={styles.details}>
                 <Text>Choose Kigali</Text>
                 <Text>World, African, Pizzeria, Coffee</Text>
-            </View>
+            </View> */}
         </View>
     )
 }
@@ -33,3 +28,5 @@ const styles = StyleSheet.create({
         width: 50,
     },
 })
+
+export default ResultCard;
