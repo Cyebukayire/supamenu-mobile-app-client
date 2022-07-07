@@ -25,11 +25,12 @@ export default function SearchResultsScreen({route, navigation}) {
         })
     }, [])
 
+
     // Filter Data
     useEffect(()=> {
         setSearchResults(()=>{
             const filtered = products.filter((product)=>{
-                return product.name == keyword.key;
+                return (product.name.indexOf(keyword.key) != -1);
             })
             return(filtered)
         })
