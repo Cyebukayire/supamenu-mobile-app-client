@@ -8,31 +8,61 @@ import { baseUrl } from "../../utils/baseUrl";
 
 
 export default function SearchResultsScreen({route, navigation}) {
+    const [keyword, setKeyword] = useState({
+        key: ""
+    });
     const [products, setProducts] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
+
     useEffect(()=> {
         axios.get(`${baseUrl}/products`)
         .then((res)=>{
-            setProducts(res.data.data)
+            setProducts(res.data.data);
+            setSearchResults(res.data.data);
         })
         .catch((e)=>{
             console.log("Error occured while fetching products");
         })
     }, [])
-    
-    const cards = products.map((product)=>{
+
+    // Filter Data
+    useEffect(()=> {
+        setSearchResults(()=>{
+            const filtered = products.filter((product)=>{
+                return product.name == keyword.key;
+            })
+            return(filtered)
+        })
+        if(keyword.key == ""){
+            setSearchResults(products);
+        }
+    }, [keyword.key])
+
+    const cards = searchResults.map((product)=>{
         return(
             <ResultCard key={product._id} name = {product.name} unitPrice={product.unitPrice} img = {product.img} quantity={product.quantity} />
         )
     })
+    
     return(
         <View style={styles.container}>
             <View style={styles.heading}>
                 <BackButton color={Colors.primary} navigation={navigation}/>
                 <TextInput style={styles.input}
                 placeholder = "Search ..."
+                onChangeText={(text)=>{
+                    setKeyword(prevKeyword => {
+                        return(
+                            {
+                                ...prevKeyword, 
+                                key: text
+                            }
+                        )
+                    })
+                }}
                 />
             </View>
-            <Text style={styles.title}>Nearby Reastaurants</Text>
+            <Text style={styles.title}>Available Products</Text>
             <ScrollView style={styles.results}>
             {cards}
             </ScrollView>
