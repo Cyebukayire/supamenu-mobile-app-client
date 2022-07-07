@@ -14,28 +14,30 @@ export default function SignupScreen({route, navigation}){
         mobile: "",
         password: ""
     })
-    const Signup = async (data) => {
-        console.log(data)
-        await axios.post(`${baseUrl}/auth/client/signup`,
-            {
-                email: data.email,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                mobile: data.mobile,
-                password: data.password
-            }
-            ,{
-                headers: {
-                    "Content-Type": "Application/Json",
-                    "Authorization": `Bearer ${token}`
-                }
-            }
+    const Signup = async (req) => {
+        const data = {
+            fname: req.firstName,
+            lname: req.lastName,
+            email: req.email,
+            mobile: req.mobile,
+            password: req.password
+        };
+        // console.log(data);
+        await axios.post(`${baseUrl}/auth/signup`,data
+        // await axios.post(`http://192.168.2.1:4000/api/v1/auth/signup`, data
+            // ,{
+            //     headers: {
+            //         "Content-Type": "Application/Json",
+            //         "Authorization": `Bearer ${token}`
+            //     }
+            // }
         )
-        .then((response) => {
+        .then((res) => {
             console.log("Signed up successfully");
+            navigation.navigate("SigninScreen", {});
         })
         .catch((e) => {
-            console.error(e.response.data.apierror.message);
+            console.log("User can't be registered, Please try again");
         })
     }
     return(

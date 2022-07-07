@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { StyleSheet, View, Text, BackHandler } from "react-native";
+import { StyleSheet, View, Text,TouchableOpacity, BackHandler } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 
 export default function BackButton({ navigation, color }) {
@@ -25,7 +25,7 @@ export default function BackButton({ navigation, color }) {
   }
 
   return (
-    <TouchableWithoutFeedback
+    <TouchableOpacity
     onPress={()=> {
       if(navigation){
         handleBackButtonClick();
@@ -35,6 +35,6 @@ export default function BackButton({ navigation, color }) {
       <View style={styles.container}>
         <Text style={styles.text}>{"<"}</Text>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 }

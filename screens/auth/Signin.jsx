@@ -7,25 +7,23 @@ import { baseUrl } from "../../utils/baseUrl";
 export default function SigninScreen({route, navigation}){
     const [token, setToken] = useState(false);
     const [formData, setFormData] = useState({
-        login: '',
+        email: '',
         password: ''
     })
     const Login = async (data) => {
         await axios.post(`${baseUrl}/auth/signin`,
         {
-            login: data.login,
+            email: data.email,
             password: data.password
-        },
-        {
-            "Content-Type": "Application/Json"
         })
         .then((response) => {
-            setToken(response.data.token.accessToken);
-            console.log(token)
+            setToken(response.data.token);
+            console.log(token);
             console.log("Logged in successfully");
+            navigation.navigate('SearchResultsScreen', {})
         })
         .catch((e) => {
-            console.log(e.response.data.apierror.message)
+            console.log("User can't login, Please try again.");
         })
     }
     return(
@@ -48,7 +46,7 @@ export default function SigninScreen({route, navigation}){
                                 setFormData((prevData) => {
                                     return({
                                         ...prevData,
-                                        login: text,
+                                        email: text,
                                     })
                                 })
                             }}

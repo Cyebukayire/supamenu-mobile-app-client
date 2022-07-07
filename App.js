@@ -12,7 +12,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      {/* <Stack.Screen
+      <Stack.Screen
             name = "SignupScreen"
             component = {SignupScreen}
             options = {{headerShown: false}}
@@ -21,12 +21,12 @@ export default function App() {
           name= "SigninScreen"
           component = {SigninScreen}
           options = {{headerShown: false}}
-        /> */}
-        {/* <Stack.Screen
+        />
+        <Stack.Screen
         name="SearchScreen"
         component={SearchScreen}
         options = {{headerShown: false}}
-        /> */}
+        />
         <Stack.Screen
         name = "SearchResultsScreen"
         component ={SearchResultsScreen}

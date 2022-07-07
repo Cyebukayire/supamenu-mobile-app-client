@@ -1,20 +1,41 @@
-import { TextInput, Text, View, StyleSheet} from "react-native";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { ScrollView, TextInput, Text, View, StyleSheet} from "react-native";
 import BackButton from "../../components/buttons/BackButton";
 import ResultCard from "../../components/cards/ResultCard";
 import Colors from "../../constants/Colors";
+import { baseUrl } from "../../utils/baseUrl";
+
 
 export default function SearchResultsScreen({route, navigation}) {
+    const [products, setProducts] = useState([]);
+    useEffect(()=> {
+        axios.get(`${baseUrl}/products`)
+        .then((res)=>{
+            setProducts(res.data.data)
+        })
+        .catch((e)=>{
+            console.log("Error occured while fetching products");
+        })
+    }, [])
+    
+    const cards = products.map((product)=>{
+        return(
+            <ResultCard key={product._id} name = {product.name} unitPrice={product.unitPrice} img = {product.img} quantity={product.quantity} />
+        )
+    })
     return(
         <View style={styles.container}>
             <View style={styles.heading}>
-                <BackButton color={Colors.primary}/>
+                <BackButton color={Colors.primary} navigation={navigation}/>
                 <TextInput style={styles.input}
                 placeholder = "Search ..."
                 />
             </View>
-
             <Text style={styles.title}>Nearby Reastaurants</Text>
-            <ResultCard />
+            <ScrollView style={styles.results}>
+            {cards}
+            </ScrollView>
         </View>
     )
 }
@@ -40,6 +61,9 @@ const styles = StyleSheet.create({
     title: {
         marginTop: 15,
         color: Colors.primary,
-        fontsize: 15,
+        fontSize: 15,
+    },
+    results: {
+        marginTop: 23
     }
 })
