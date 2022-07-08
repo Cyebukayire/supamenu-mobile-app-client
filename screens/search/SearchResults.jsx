@@ -20,9 +20,9 @@ export default function SearchResultsScreen({route, navigation}) {
     const onRefresh = () => {
         setRefreshing(true);
         setTimeout(() => {
-          changeBgColor('green');
           setRefreshing(false);
         }, 2000);
+        fetchProducts();
       };
 
     // STYLES
@@ -53,7 +53,7 @@ export default function SearchResultsScreen({route, navigation}) {
             marginTop: 23
         }
     })
-    useEffect(()=> {
+    const fetchProducts = ()=> {
         axios.get(`${baseUrl}/products`)
         .then((res)=>{
             setProducts(res.data.data);
@@ -62,6 +62,9 @@ export default function SearchResultsScreen({route, navigation}) {
         .catch((e)=>{
             console.log("Error occured while fetching products");
         })
+    }
+    useEffect(()=> {
+        fetchProducts();
     }, [])
 
 
@@ -77,17 +80,13 @@ export default function SearchResultsScreen({route, navigation}) {
             setSearchResults(products);
         }
     }, [keyword.key])
-console.log(products);
+    
     const cards = searchResults.map((product)=>{
         return(
             <ResultCard key={product._id} name = {product.name} unitPrice={product.unitPrice} img = {product.img} quantity={product.quantity} />
         )
     })
-    console.log(products)
-    const renderItem = ({ product }) => (
-        <ResultCard  name = {product?.name} unitPrice={product?.unitPrice} img = {product?.img} quantity={product?.quantity} />
-      );
-    
+
     return(
         <View style={styles.container}>
             <View style={styles.heading}>
@@ -107,14 +106,7 @@ console.log(products);
                 />
             </View>
             <Text style={styles.title}>Available Products</Text>
-            {/* <FlatList
-                style={styles.results}
-                data={products}
-                renderItem={renderItem}
-                keyExtractor={(product) => product.id}
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-            /> */}
+            
             <ScrollView style={styles.results}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} 
