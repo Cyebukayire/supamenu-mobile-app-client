@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import Colors from '../../constants/Colors';
 import { baseUrl } from "../../utils/baseUrl";
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions'
 
 export default function SigninScreen({route, navigation}){
     const [token, setToken] = useState(false);
@@ -10,6 +12,8 @@ export default function SigninScreen({route, navigation}){
         email: '',
         password: ''
     })
+
+       /** START AUTH  */
     const Login = async (data) => {
         await axios.post(`${baseUrl}/auth/signin`,
         {
@@ -20,6 +24,7 @@ export default function SigninScreen({route, navigation}){
             setToken(response.data.token);
             console.log(token);
             console.log("Logged in successfully");
+            alert("You're logged in successfully");
             navigation.navigate('SearchResultsScreen', {})
         })
         .catch((e) => {

@@ -7,12 +7,20 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchScreen from './screens/search/Search';
 import SearchResultsScreen from './screens/search/SearchResults';
 const Stack = createNativeStackNavigator();
+import Notifs from './screens/tryOuts/Notifs';
+import Refresh from './screens/tryOuts/Refresh';
+
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen
+        {/* <Stack.Screen
+        name = "TryOut"
+        component={Refresh}
+        optoins = {{headerShown: false}}
+        /> */}
+      {/* <Stack.Screen
             name = "SignupScreen"
             component = {SignupScreen}
             options = {{headerShown: false}}
@@ -21,12 +29,12 @@ export default function App() {
           name= "SigninScreen"
           component = {SigninScreen}
           options = {{headerShown: false}}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
         name="SearchScreen"
         component={SearchScreen}
         options = {{headerShown: false}}
-        />
+        /> */}
         <Stack.Screen
         name = "SearchResultsScreen"
         component ={SearchResultsScreen}

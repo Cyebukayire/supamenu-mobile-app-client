@@ -17,7 +17,7 @@ const ResultCard = ({name, unitPrice, img, quantity}) => {
 const styles = StyleSheet.create({
     card: {
         marginTop: 15,
-        backgroundColor: "#f7f7f7",
+        backgroundColor: Colors.lightGrey,
         boxSizing: "border-box",
         padding: 10,
         display: 'flex',
